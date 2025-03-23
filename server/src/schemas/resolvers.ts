@@ -6,15 +6,6 @@ interface LoginUserArgs {
   email: string;
   password: string;
 }
-/*
-interface AddUserArgs {
-  input: {
-    username: string;
-    email: string;
-    password: string;
-  };
-}
-*/
 
 interface AddUserArgs {
   username: string;

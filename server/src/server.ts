@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'node:path';
+import cors from 'cors';
 import type { Request, Response } from 'express';
 import db from './config/connection.js'
 import { ApolloServer } from '@apollo/server';// Note: Import from @apollo/server-express
@@ -21,6 +22,12 @@ const startApolloServer = async () => {
 
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
+
+  // Enable CORS for all origins or specific origins
+  app.use(cors({
+    origin: ['http://localhost:3000'], // Allow requests from the frontend
+    credentials: true, // Allow cookies and authentication headers
+  }));
 
   app.use('/graphql', expressMiddleware(server as any,
     {
