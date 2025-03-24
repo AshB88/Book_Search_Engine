@@ -4,14 +4,14 @@ import type { ChangeEvent, FormEvent } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import type { User } from '../models/User';
+//import type { User } from '../models/User';
 
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
 // biome-ignore lint/correctness/noEmptyPattern: <explanation>
 const LoginForm = ({}: { handleModalClose: () => void }) => {
-  const [userFormData, setUserFormData] = useState<User>({ username: '', email: '', password: '', savedBooks: [] });
+  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [loginUser] = useMutation(LOGIN_USER);
@@ -33,8 +33,13 @@ const LoginForm = ({}: { handleModalClose: () => void }) => {
 
     try {
       const { data } = await loginUser({
-        variables: { email: userFormData.email, password: userFormData.password},
+        variables: { 
+          email: userFormData.email.trim(), 
+          password: userFormData.password.trim()
+        },
       });
+
+      console.log('Login response:', data);
 
       if (!data) {
         throw new Error('Unable to log in user!');
@@ -47,10 +52,8 @@ const LoginForm = ({}: { handleModalClose: () => void }) => {
     }
 
     setUserFormData({
-      username: '',
       email: '',
       password: '',
-      savedBooks: [],
     });
   };
 

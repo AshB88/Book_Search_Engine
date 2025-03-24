@@ -68,7 +68,8 @@ const resolvers = {
       return { token, user };
     },
 
-    saveBook: async (_parent: any, { input }: SaveBookArgs, context: Context): Promise<UserDocument | null> => {
+    saveBook: async (_parent: any, { input }: { input: SaveBookArgs }, context: Context): Promise<UserDocument | null> => {
+      console.log("Recieved input: ", input);
       if (context.user) {
         return await User.findOneAndUpdate(
           { _id: context.user._id },
