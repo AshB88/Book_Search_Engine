@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import cors from 'cors';
 import type { Request, Response } from 'express';
 import db from './config/connection.js'
@@ -7,6 +8,9 @@ import { ApolloServer } from '@apollo/server';// Note: Import from @apollo/serve
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
 import { authenticateToken } from './utils/auth.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const server = new ApolloServer({
   typeDefs,
@@ -24,7 +28,7 @@ const startApolloServer = async () => {
   app.use(express.json());
 
   app.use(cors({
-    origin: ['http://localhost:3000'], // Allow requests from the frontend
+    origin: ['http://localhost:3000', 'https://book-search-engine-v4jk.onrender.com'], // Allow requests from the frontend
     credentials: true, // Allow cookies and authentication headers
   }));
 
