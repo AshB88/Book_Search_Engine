@@ -46,7 +46,7 @@ const resolvers = {
 
   Mutation: {
     login: async (_parent: any, { email, password }: LoginUserArgs): Promise<{ token: string; user: UserDocument }> => {
-      console.log('Attempting login for email:${email}');
+      console.log(`Attempting login for email: ${email}`);
 
       const user = await User.findOne({ email});
       console.log('User found: ', user);
