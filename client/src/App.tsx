@@ -12,8 +12,9 @@ import Navbar from './components/Navbar';
 
 // Construct main GraphQL API endpoint
 const httpLink = createHttpLink({
-  uri: '/graphql', // ✅ Use relative path
+  uri: import.meta.env.VITE_GRAPHQL_URI || '/graphql',
 });
+
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
